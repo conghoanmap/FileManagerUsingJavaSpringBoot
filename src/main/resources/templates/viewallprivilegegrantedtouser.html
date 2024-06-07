@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+<head th:replace="~{layout/layout-admin :: html_head}">
+</head>
+
+<body class="page-profile">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout-admin :: header}">
+    </header><!-- navbar -->
+
+    <div class="content content-fixed">
+        <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <h4 class="mg-b-0 tx-spacing--1">Welcome to Dashboard</h4>
+                </div>
+                <div class="d-none d-md-block">
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save"
+                            class="wd-10 mg-r-5"></i> Save</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload"
+                            class="wd-10 mg-r-5"></i> Export</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2"
+                            class="wd-10 mg-r-5"></i> Share</button>
+                    <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders"
+                            class="wd-10 mg-r-5"></i> Settings</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-primary">Tất cả quyền hệ thống của <span th:text="${user_name}"></span>
+                    </h5>
+                    <table class="table table-striped" border="1">
+                        <thead>
+                            <tr>
+                                <th>Grantee</th>
+                                <th>Privilege</th>
+                                <th>Admin Option</th>
+                                <th>Revoke</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <form id="grant-sys-privs"
+                                        th:action="@{/privilege/grantSysPrivsToUser(user_name=${user_name})}"
+                                        method="post">
+                                        <select class="form-select" name="priv_name">
+                                            <option th:each="item : ${sysprivs}" th:value="${item}" th:text="${item}">
+                                            </option>
+                                        </select>
+                                        <span class="text-danger" th:text="${errorSysGrant}"></span>
+                                    </form>
+                                </td>
+                                <td><button form="grant-sys-privs" type="submit" class="btn btn-primary">Grant</button>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr th:each="row : ${usersysprivs}">
+                                <td th:text="${row['GRANTEE']}"></td>
+                                <td th:text="${row['PRIVILEGE']}"></td>
+                                <td th:text="${row['ADMIN_OPTION']}"></td>
+                                <td><a
+                                        th:href="@{|/privilege/revokeSysPrivsFromUser?user_name=${row['GRANTEE']}&priv_name=${row['PRIVILEGE']}|}">Revoke</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card mg-t-15">
+                <div class="card-body">
+                    <h5 class="text-primary">Tất cả quyền trên bảng của <span th:text="${user_name}"></span>
+                    </h5>
+                    <table class="table table-striped" border="1">
+                        <thead>
+                            <tr>
+                                <th>Grantee</th>
+                                <th>Owner</th>
+                                <th>Table</th>
+                                <th>Column</th>
+                                <th>Privilege</th>
+                                <th>Revoke</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <form id="grant-tab-privs"
+                                        th:action="@{/privilege/grantTabPrivsToUser(user_name=${user_name})}"
+                                        method="post">
+                                        <select class="form-select" name="priv_name">
+                                            <option value="ALL" selected>ALL</option>
+                                            <option th:each="item : ${tabprivs}" th:value="${item}" th:text="${item}">
+                                            </option>
+                                        </select>
+                                        <span class="text-danger" th:text="${errorTabGrant}"></span>
+                                    </form>
+                                </td>
+                                <td>
+                                    <select class="form-select" name="table_name" form="grant-tab-privs">
+                                        <option th:each="item : ${tables}" th:value="${item}" th:text="${item}">
+                                        </option>
+                                        <option th:each="item : ${funcprocs}" th:value="${item}" th:text="${item}">
+                                        </option>
+                                    </select>
+                                </td>
+                                <td><button form="grant-tab-privs" type="submit" class="btn btn-primary">Grant</button>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr th:each="row : ${usertabprivs}">
+                                <td th:text="${row['GRANTEE']}"></td>
+                                <td th:text="${row['OWNER']}"></td>
+                                <td th:text="${row['TABLE_NAME']}"></td>
+                                <td th:text="${row['COLUMN_NAME']}"></td>
+                                <td th:text="${row['PRIVILEGE']}"></td>
+                                <td><a
+                                        th:href="@{|/privilege/revokeTabPrivsFromUser?user_name=${row['GRANTEE']}&priv_name=${row['PRIVILEGE']}&table_name=${row['TABLE_NAME']}|}">Revoke</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card mg-t-15">
+                <div class="card-body">
+                    <h5 class="text-primary">Nhóm quyền được gán cho <span th:text="${user_name}"></span>
+                    </h5>
+                    <table class="table table-striped" border="1">
+                        <thead>
+                            <tr>
+                                <th>Grantee</th>
+                                <th>Granted Role</th>
+                                <th>Admin Option</th>
+                                <th>Default Role</th>
+                                <th>Common</th>
+                                <th>Revoke</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <form id="grant-role"
+                                        th:action="@{/privilege/grantRoleToUser(user_name=${user_name})}" method="post">
+                                        <select class="form-select" name="role_name">
+                                            <option th:each="item : ${roles}" th:value="${item['ROLE']}"
+                                                th:text="${item['ROLE']}">
+                                            </option>
+                                        </select>
+                                        <span class="text-danger" th:text="${errorRoleGrant}"></span>
+                                    </form>
+                                </td>
+                                <td><button form="grant-role" type="submit" class="btn btn-primary">Grant</button></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr th:each="row : ${rolesgrant}">
+                                <td th:text="${row['GRANTEE']}"></td>
+                                <td><a th:text="${row['GRANTED_ROLE']}"
+                                        th:href="@{|/privilege/viewallprivilegegrantedtorole?role_name=${row['GRANTED_ROLE']}|}"></a></td>
+                                <td th:text="${row['ADMIN_OPTION']}"></td>
+                                <td th:text="${row['DEFAULT_ROLE']}"></td>
+                                <td th:text="${row['COMMON']}"></td>
+                                <td><a th:href="@{|/privilege/revokeRoleFromUser?user_name=${row['GRANTEE']}&role_name=${row['GRANTED_ROLE']}|}">Revoke</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- container -->
+    </div><!-- content -->
+
+
+
+    <footer class="footer" th:replace="~{layout/layout-admin :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.sampledata.js"></script>
+    <script src="/assets/js/dashboard-two.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+</html>

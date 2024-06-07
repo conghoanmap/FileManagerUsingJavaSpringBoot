@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+<head th:replace="~{layout/layout-admin :: html_head}">
+</head>
+
+<body class="page-profile">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout-admin :: header}">
+    </header><!-- navbar -->
+
+    <div class="content content-fixed">
+        <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <h4 class="mg-b-0 tx-spacing--1">Welcome to Dashboard</h4>
+                </div>
+                <div class="d-none d-md-block">
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save"
+                            class="wd-10 mg-r-5"></i> Save</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload"
+                            class="wd-10 mg-r-5"></i> Export</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2"
+                            class="wd-10 mg-r-5"></i> Share</button>
+                    <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders"
+                            class="wd-10 mg-r-5"></i> Settings</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-primary">Tất cả nhóm quyền</h5>
+                    <table class="table table-striped" border="1">
+                        <thead>
+                            <tr>
+                                <th>Role Id</th>
+                                <th>Role Name</th>
+                                <th>View Detail</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <form id="create-role" action="/privilege/createRole" method="post">
+                                        <input class="form-control" type="text" name="role_name"
+                                            placeholder="Enter role name...">
+                                    </form>
+                                </td>
+                                </form>
+                                <td><button form="create-role" type="submit" class="btn btn-primary">Create</button></td>
+                                <td>
+                                    <form id="search-role" action="/privilege/searchRole" method="post">
+                                        <input class="form-control" type="text" name="role_name"
+                                            placeholder="Search role name...">
+                                    </form>
+                                </td>
+                                <td><button form="search-role" type="submit" class="btn btn-primary">Search</button></td>
+                            </tr>
+                            <tr th:each="row : ${roles}">
+                                <td th:text="${row['ROLE_ID']}"></td>
+                                <td th:text="${row['ROLE']}"></td>
+                                <td><a
+                                        th:href="@{|/privilege/viewallprivilegegrantedtorole?role_name=${row['ROLE']}|}">View</a>
+                                </td>
+                                <td><a th:href="@{|/privilege/deleteRole?role_name=${row['ROLE']}|}">DELETE</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- container -->
+    </div><!-- content -->
+
+
+
+    <footer class="footer" th:replace="~{layout/layout-admin :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.sampledata.js"></script>
+    <script src="/assets/js/dashboard-two.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+</html>

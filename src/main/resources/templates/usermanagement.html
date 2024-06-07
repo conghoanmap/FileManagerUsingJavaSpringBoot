@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+<head th:replace="~{layout/layout :: html_head}">
+</head>
+
+<body class="page-profile">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout-admin :: header}">
+    </header><!-- navbar -->
+
+    <div class="content content-fixed">
+        <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <h4 class="mg-b-0 tx-spacing--1">Welcome to Dashboard</h4>
+                </div>
+                <div class="d-none d-md-block">
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save"
+                            class="wd-10 mg-r-5"></i> Save</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload"
+                            class="wd-10 mg-r-5"></i> Export</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2"
+                            class="wd-10 mg-r-5"></i> Share</button>
+                    <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders"
+                            class="wd-10 mg-r-5"></i> Settings</button>
+                </div>
+            </div>
+
+            <div class="row row-xs">
+                <div class="col-12 col-xl-10 mg-t-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h6 class="mg-b-2">All User</h6>
+                            </div>
+                        </div><!-- card-header -->
+                        <div class="card-body">
+                            <div class="row align-items-sm-end">
+                                <div class="col-lg-12 col-xl-12" style="max-height: 300px; overflow-y: auto;">
+                                    <table id="MyTable1" class="table table-bordered" border="1"
+                                        style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th>USERNAME</th>
+                                                <th>CREATED</th>
+                                                <th>EXPIRY_DATE</th>
+                                                <th>ACCOUNT_STATUS</th>
+                                                <th>LAST_LOGIN</th>
+                                                <th>PROFILE</th>
+                                                <th>VIEW AUDIT</th>
+                                                <th>Update</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="row : ${users}">
+                                                <td th:text="${row['USERNAME']}"></td>
+                                                <td th:text="${row['CREATED']}"></td>
+                                                <td th:text="${row['EXPIRY_DATE']}"></td>
+                                                <td th:text="${row['ACCOUNT_STATUS']}"></td>
+                                                <td th:text="${row['LAST_LOGIN']}"></td>
+                                                <td th:text="${row['PROFILE']}"></td>
+                                                <td><a th:href="@{|/manager/audituser?username=${row['USERNAME']}|}">View</a></td>
+                                                <td><a th:href="@{|/manager/detailuser?username=${row['USERNAME']}|}">Update</a></td>
+                                                <td><a href="#">Delete</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                
+                            </div>
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div>
+                <div class="col-12 col-xl-10 mg-t-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h6 class="mg-b-2">User Policy</h6>
+                            </div>
+                        </div><!-- card-header -->
+                        <div class="card-body">
+                            <div class="row align-items-sm-end">
+                                <div class="col-lg-12 col-xl-12" style="max-height: 300px; overflow-y: auto;">
+                                    <table id="MyTable1" class="table table-bordered" border="1"
+                                    style="max-height: 300px; overflow-y: auto;" >
+                                        <thead>
+                                            <tr>
+                                                <th>TIMESTAMP</th>
+                                                <th>DB_USER</th>
+                                                <th>OBJECT_NAME</th>
+                                                <th>SQL_TEXT</th>
+                                                <th>STATEMENT_TYPE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="row : ${users_policy}">
+                                                <td th:text="${row['TIMESTAMP']}"></td>
+                                                <td th:text="${row['DB_USER']}"></td>
+                                                <td th:text="${row['OBJECT_NAME']}"></td>
+                                                <td class="text-truncate" style="max-width: 200px;" th:text="${row['SQL_TEXT']}"></td>
+                                                <td th:text="${row['STATEMENT_TYPE']}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                
+                            </div>
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div>
+                <div class="col-12 col-xl-10 mg-t-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h6 class="mg-b-2">File Policy</h6>
+                            </div>
+                        </div><!-- card-header -->
+                        <div class="card-body">
+                            <div class="row align-items-sm-end">
+                                <div class="col-lg-12 col-xl-12" style="max-height: 300px; overflow-y: auto;">
+                                    <table id="MyTable1" class="table table-bordered" border="1"
+                                        style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th>TIMESTAMP</th>
+                                                <th>DB_USER</th>
+                                                <th>OBJECT_NAME</th>
+                                                <th>SQL_TEXT</th>
+                                                <th>STATEMENT_TYPE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="row : ${files_policy}">
+                                                <td th:text="${row['TIMESTAMP']}"></td>
+                                                <td th:text="${row['DB_USER']}"></td>
+                                                <td th:text="${row['OBJECT_NAME']}"></td>
+                                                <td class="text-truncate" style="max-width: 200px;" th:text="${row['SQL_TEXT']}"></td>
+                                                <td th:text="${row['STATEMENT_TYPE']}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div>
+                <div class="col-12 col-xl-10 mg-t-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h6 class="mg-b-2">Folder Policy</h6>
+                            </div>
+                        </div><!-- card-header -->
+                        <div class="card-body">
+                            <div class="row align-items-sm-end">
+                                <div class="col-lg-12 col-xl-12" style="max-height: 300px; overflow-y: auto;">
+                                    <table id="MyTable1" class="table table-bordered" border="1"
+                                        style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th>TIMESTAMP</th>
+                                                <th>DB_USER</th>
+                                                <th>OBJECT_NAME</th>
+                                                <th>SQL_TEXT</th>
+                                                <th>STATEMENT_TYPE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="row : ${folders_policy}">
+                                                <td th:text="${row['TIMESTAMP']}"></td>
+                                                <td th:text="${row['DB_USER']}"></td>
+                                                <td th:text="${row['OBJECT_NAME']}"></td>
+                                                <td class="text-truncate" style="max-width: 200px;" th:text="${row['SQL_TEXT']}"></td>
+                                                <td th:text="${row['STATEMENT_TYPE']}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                
+                            </div>
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div>
+                <div class="col-12 col-xl-10 mg-t-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h6 class="mg-b-2">File_Type Policy</h6>
+                            </div>
+                        </div><!-- card-header -->
+                        <div class="card-body">
+                            <div class="row align-items-sm-end">
+                                <div class="col-lg-12 col-xl-12" style="max-height: 300px; overflow-y: auto;">
+                                    <table id="MyTable1" class="table table-bordered" border="1"
+                                        style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th>TIMESTAMP</th>
+                                                <th>DB_USER</th>
+                                                <th>OBJECT_NAME</th>
+                                                <th>SQL_TEXT</th>
+                                                <th>STATEMENT_TYPE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="row : ${filetypes_policy}">
+                                                <td th:text="${row['TIMESTAMP']}"></td>
+                                                <td th:text="${row['DB_USER']}"></td>
+                                                <td th:text="${row['OBJECT_NAME']}"></td>
+                                                <td class="text-truncate" style="max-width: 200px;" th:text="${row['SQL_TEXT']}"></td>
+                                                <td th:text="${row['STATEMENT_TYPE']}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                
+                            </div>
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div>
+            </div><!-- row -->
+        </div><!-- container -->
+    </div><!-- content -->
+
+
+
+    <footer class="footer" th:replace="~{layout/layout-admin :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.sampledata.js"></script>
+    <script src="/assets/js/dashboard-two.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var users = /*[[${users}]]*/[];
+        /*]]>*/
+        console.log(users);
+    </script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+</html>

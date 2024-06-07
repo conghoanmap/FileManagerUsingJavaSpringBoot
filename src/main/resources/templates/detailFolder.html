@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/app-file-manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:53 GMT -->
+
+<head th:replace="~{layout/layout :: html_head}">
+</head>
+
+<body class="app-filemgr">
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout :: header}">
+    </header><!-- navbar -->
+    <!-- <div class="VCL">
+        <p th:text="${user.USERNAME}"></p>
+    </div> -->
+    <div class="filemgr-wrapper">
+        <div class="filemgr-sidebar">
+            <div class="filemgr-sidebar-header">
+                <div class="dropdown dropdown-icon flex-fill">
+                    <button class="btn btn-xs btn-white w-100" data-bs-toggle="dropdown">New <i
+                            data-feather="chevron-down"></i></button>
+                    <div class="dropdown-menu tx-13">
+                        <a href="#" class="dropdown-item"><i data-feather="folder"></i><span>Folder</span></a>
+                        <a href="#" class="dropdown-item"><i data-feather="file"></i><span>Notes</span></a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item"><i data-feather="file-text"></i><span>Word Document</span></a>
+                        <a href="#" class="dropdown-item"><i data-feather="file-text"></i><span>Powepoint</span></a>
+                        <a href="#" class="dropdown-item"><i data-feather="file-text"></i><span>Excel
+                                Spreadsheet</span></a>
+                    </div><!-- dropdown-menu -->
+                </div><!-- dropdown -->
+                <div class="dropdown dropdown-icon flex-fill mg-l-10">
+                    <button class="btn btn-xs btn-primary w-100" data-bs-toggle="dropdown">Upload <i
+                            data-feather="chevron-down"></i></button>
+                    <div class="dropdown-menu tx-13">
+                        <a href="#" class="dropdown-item"><i data-feather="file"></i><span>File</span></a>
+                        <a href="#" class="dropdown-item"><i data-feather="folder"></i><span>Folder</span></a>
+                    </div><!-- dropdown-menu -->
+                </div><!-- dropdown -->
+            </div><!-- filemgr-sidebar-header -->
+            <div class="filemgr-sidebar-body">
+                <div class="pd-t-20 pd-b-10 pd-x-10">
+                    <label class="tx-sans tx-uppercase tx-medium tx-10 tx-spacing-1 tx-color-03 pd-l-10">My
+                        Drive</label>
+                    <nav class="nav nav-sidebar tx-13">
+                        <a href="#" class="nav-link active"><i data-feather="folder"></i> <span>All Files</span></a>
+                    </nav>
+                    <nav class="nav nav-sidebar tx-13">
+                        <a href="@{/home/profile}" class="nav-link"><i data-feather="user"></i> <span>Edit Profile</span></a>
+                    </nav>
+                    <nav class="nav nav-sidebar tx-13">
+                        <a href="/auth/logout" class="nav-link"><i data-feather="log-out"></i> <span>Logout</span></a>
+                    </nav>
+                </div>
+                <div class="pd-y-10 pd-x-20">
+                    <label class="tx-sans tx-uppercase tx-medium tx-10 tx-spacing-1 tx-color-03 mg-b-15">Storage
+                        Status</label>
+
+                    <div class="media">
+                        <i data-feather="database" class="wd-30 ht-30"></i>
+                        <div class="media-body mg-l-10">
+                            <div class="tx-12 mg-b-4">10.2GB used of 50GB</div>
+                            <div class="progress ht-3 mg-b-20">
+                                <div class="progress-bar wd-15p" role="progressbar" aria-valuenow="15" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                    <p class="tx-12">Last login: <span class="text-danger" th:text="${last_login}"></span><a
+                            href="#"></a></p>
+                </div>
+            </div><!-- filemgr-sidebar-body -->
+        </div><!-- filemgr-sidebar -->
+
+        <div class="filemgr-content">
+            <div class="filemgr-content-header">
+                <i data-feather="search"></i>
+                <div class="search-form">
+                    <input type="search" class="form-control" placeholder="Search for files and folders">
+                </div><!-- search-form -->
+                <nav class="nav d-none d-sm-flex mg-l-auto">
+                    <a href="#" class="nav-link"><i data-feather="list"></i></a>
+                    <a href="#" class="nav-link"><i data-feather="alert-circle"></i></a>
+                    <a href="#" class="nav-link"><i data-feather="settings"></i></a>
+                </nav>
+            </div><!-- filemgr-content-header -->
+            <div class="filemgr-content-body">
+                <div class="pd-20 pd-lg-25 pd-xl-30">
+                    <div class="wd-1000">
+                        <div class="wd-300 mg-x-10 card-file-thumb tx-gray-600 bg-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-folder">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                </path>
+                            </svg>
+                        </div>
+
+                        <h4 class="mg-t-20">File Name: <form th:action="@{/home/renameFolder(folderId=${folder.FOLDER_ID})}"
+                                method="post" class="wd-500 d-flex"><input type="text" class="form-control"
+                                    name="newname" placeholder="Input box" th:value="${folder.FOLDER_NAME}">
+                                <button type="submit" class="mg-l-20 btn btn-success">Rename</button>
+                            </form>
+                        </h4>
+                        <h4>Folder Path: <span class="text-danger" th:text="${folder.FOLDER_PATH}"></span></h4>
+                        <h4>Folder Size: <span class="text-danger" th:text="${size}"></span> <span
+                                class="text-danger">bytes</span></h4>
+                        <h4>File and Folder: <span class="text-danger" th:text="${countfile}"></span> <span
+                                class="text-danger">files</span></h4>
+                    </div>
+                    <a th:href="@{|/home/deleteFolder?folderId=${folder.FOLDER_ID}|}" class="btn btn-danger">Delete</a>
+                    <a th:href="@{/home(currentFolder=${folder.FOLDER_ID})}" class="btn btn-warning">View All Files and Folders</a>
+                </div>
+            </div><!-- filemgr-content-body -->
+        </div><!-- filemgr-content -->
+    </div><!-- filemgr-wrapper -->
+
+    <footer class="footer" th:replace="~{layout/layout :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.filemgr.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+    <script>
+        $(function () {
+            'use script'
+
+            window.darkMode = function () {
+                $('.btn-white').addClass('btn-dark').removeClass('btn-white');
+            }
+
+            window.lightMode = function () {
+                $('.btn-dark').addClass('btn-white').removeClass('btn-dark');
+            }
+
+            var hasMode = Cookies.get('df-mode');
+            if (hasMode === 'dark') {
+                darkMode();
+            } else {
+                lightMode();
+            }
+        })
+    </script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/app-file-manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:54 GMT -->
+
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+<head th:replace="~{layout/layout-admin :: html_head}">
+</head>
+
+<body class="page-profile">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout-admin :: header}">
+    </header><!-- navbar -->
+
+    <div class="content content-fixed">
+        <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <h4 class="mg-b-0 tx-spacing--1">Welcome to Dashboard</h4>
+                </div>
+                <div class="d-none d-md-block">
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save"
+                            class="wd-10 mg-r-5"></i> Save</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload"
+                            class="wd-10 mg-r-5"></i> Export</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2"
+                            class="wd-10 mg-r-5"></i> Share</button>
+                    <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders"
+                            class="wd-10 mg-r-5"></i> Settings</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-xl-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-primary">Database</h5>
+                            <table class="table table-striped" border="1" style="width: 100%; table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th>DBID</th>
+                                        <th>NAME</th>
+                                        <th>CREATED</th>
+                                        <th>DB_UNIQUE_NAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="row : ${database}">
+                                        <td th:text="${row['dbid']}"></td>
+                                        <td th:text="${row['name']}"></td>
+                                        <td th:text="${row['created']}"></td>
+                                        <td th:text="${row['resetlogs_time']}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="text-primary">PGA Memory</h5>
+                            <div class="card">
+                                <div class="card-body pd-lg-25">
+                                    <div class="row align-items-sm-end">
+                                        <div class="col-lg-12 col-xl-12">
+                                            <div class="chart-six">
+                                                <canvas id="MyChart1"></canvas>
+                                                <script th:inline="javascript">
+                                                    /*<![CDATA[*/
+                                                    var pgaData = /*[[${pga}]]*/[];
+                                                    /*]]>*/
+
+                                                    var names = pgaData.map(item => item.NAME);
+                                                    var values = pgaData.map(item => item.VALUE);
+
+                                                    var ctx = document.getElementById('MyChart1').getContext('2d');
+                                                    var myChart = new Chart(ctx, {
+                                                        type: 'bar',
+                                                        data: {
+                                                            labels: names,
+                                                            datasets: [{
+                                                                label: 'PGA Data',
+                                                                data: values,
+                                                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                                borderWidth: 1
+                                                            }]
+                                                        },
+                                                        options: {
+                                                            scales: {
+                                                                yAxes: [{
+                                                                    ticks: {
+                                                                        beginAtZero: true
+                                                                    }
+                                                                }]
+                                                            }
+                                                        }
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mg-t-15">
+                            <h5 class="text-primary">SGA Memory</h5>
+                            <div class="card">
+                                <div class="card-body pd-lg-25">
+                                    <div class="row align-items-sm-end">
+                                        <div class="col-lg-12 col-xl-12">
+                                            <div class="chart-six"><canvas id="myChart2"></canvas>
+                                                <script th:inline="javascript">
+                                                    /*<![CDATA[*/
+                                                    var sgaData = /*[[${sga}]]*/[];
+                                                    console.log(sgaData);
+                                                    var labels = sgaData.map(item => item.NAME);
+                                                    var values = sgaData.map(item => item.VALUE);
+
+                                                    var ctx = document.getElementById('myChart2').getContext('2d');
+                                                    var myChart = new Chart(ctx, {
+                                                        type: 'doughnut',
+                                                        data: {
+                                                            labels: labels,
+                                                            datasets: [{
+                                                                label: 'SGA Data',
+                                                                data: values,
+                                                                backgroundColor: [
+                                                                    'rgba(255, 99, 132, 0.2)',
+                                                                    'rgba(54, 162, 235, 0.2)',
+                                                                    'rgba(255, 206, 86, 0.2)',
+                                                                    'rgba(75, 192, 192, 0.2)',
+                                                                    'rgba(153, 102, 255, 0.2)',
+                                                                    'rgba(255, 159, 64, 0.2)'
+                                                                ],
+                                                                borderColor: [
+                                                                    'rgba(255, 99, 132, 1)',
+                                                                    'rgba(54, 162, 235, 1)',
+                                                                    'rgba(255, 206, 86, 1)',
+                                                                    'rgba(75, 192, 192, 1)',
+                                                                    'rgba(153, 102, 255, 1)',
+                                                                    'rgba(255, 159, 64, 1)'
+                                                                ],
+                                                                borderWidth: 1
+                                                            }]
+                                                        },
+                                                        options: {
+                                                            responsive: true,
+                                                            maintainAspectRatio: false
+                                                        }
+                                                    });
+                                                    /*]]>*/
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-lg-5 col-xl-4 mg-t-30 mg-lg-t-0">
+                                        </div> -->
+                                    </div>
+                                </div><!-- card-body -->
+                            </div><!-- card -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-primary">Intance</h5>
+                            <table class="table table-striped" border="1" style="width: 100%; table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th>INSTANCE_NAME</th>
+                                        <th>HOST_NAME</th>
+                                        <th>STARTUP_TIME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="row : ${instance}">
+                                        <td th:text="${row['INSTANCE_NAME']}"></td>
+                                        <td th:text="${row['HOST_NAME']}"></td>
+                                        <td th:text="${row['STARTUP_TIME']}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="text-primary">SpFile</h5>
+                            <table class="table table-striped" border="1" style="width: 100%; table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">NAME</th>
+                                        <th style="width: 90%;">VALUE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="row : ${spfile}">
+                                        <td th:text="${row['NAME']}"></td>
+                                        <td th:text="${row['VALUE']}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="text-primary">Control Files</h5>
+                            <table class="table table-striped" border="1" style="width: 100%; table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <th>VALUE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="row : ${controlfile}">
+                                        <td th:text="${row['name']}"></td>
+                                        <td th:text="${row['value']}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="text-primary">Tablespaces</h5>
+                            <table class="table table-striped" border="1" style="width: 100%; table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th>TABLESPACE_NAME</th>
+                                        <th>BLOCK_SIZE</th>
+                                        <th>MAX_SIZE</th>
+                                        <th>STATUS</th>
+                                        <th>DELETE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="row : ${tablespace}">
+                                        <td><a th:text="${row['TABLESPACE_NAME']}"
+                                                th:href="@{|/manager/detailtablespace?tablespace_name=${row['TABLESPACE_NAME']}|}"></a>
+                                        </td>
+                                        <td th:text="${row['BLOCK_SIZE']}"></td>
+                                        <td th:text="${row['MAX_SIZE']}"></td>
+                                        <td th:text="${row['STATUS']}"></td>
+                                        <td><a th:href="@{|/manager/deletetablespace?tablespace_name=${row['TABLESPACE_NAME']}|}">DELETE</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="text-primary">Add Tablespace</h5>
+                            <form th:action="@{/manager/addtablespace}" method="post">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput" class="d-block">Name</label>
+                                            <input type="text" class="form-control" placeholder="Name..." name="tablespace_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput" class="d-block">Submit</label>
+                                            <button type="submit" class="btn btn-primary" th:text="Submit"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- container -->
+    </div><!-- content -->
+
+
+
+    <footer class="footer" th:replace="~{layout/layout-admin :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.sampledata.js"></script>
+    <script src="/assets/js/dashboard-two.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+</html>

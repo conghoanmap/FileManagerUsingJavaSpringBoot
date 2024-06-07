@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+<head th:replace="~{layout/layout-admin :: html_head}">
+</head>
+
+<body class="page-profile">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout-admin :: header}">
+    </header><!-- navbar -->
+
+    <div class="content content-fixed">
+        <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <h4 class="mg-b-0 tx-spacing--1">Welcome to Dashboard</h4>
+                </div>
+                <div class="d-none d-md-block">
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save"
+                            class="wd-10 mg-r-5"></i> Save</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload"
+                            class="wd-10 mg-r-5"></i> Export</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2"
+                            class="wd-10 mg-r-5"></i> Share</button>
+                    <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders"
+                            class="wd-10 mg-r-5"></i> Settings</button>
+                </div>
+            </div>
+
+            <div class="row row-xs">
+                <div class="col-12">
+                    <div class="card">
+                        <div
+                            class="card-header bd-b-0 pd-t-20 pd-lg-t-25 pd-l-20 pd-lg-l-25 d-flex flex-column flex-sm-row align-items-sm-start justify-content-sm-between">
+                            <div>
+                                <h6 class="mg-b-5">Session</h6>
+                            </div>
+                        </div>
+                        <div class="card-body pd-lg-25">
+                            <div class="row align-items-sm-end">
+                                <div class="col-lg-12 col-xl-12">
+                                    <div class="chart-six" style="max-height: 300px; overflow-y: auto;">
+                                        <table class="table no-footer" border="1">
+                                            <thead>
+                                                <tr>
+                                                    <th>SID</th>
+                                                    <th>SERIAL#</th>
+                                                    <th>USERNAME</th>
+                                                    <th>PROGRAM</th>
+                                                    <th>STATUS</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="row : ${sessions}">
+                                                    <td th:text="${row['SID']}"></td>
+                                                    <td th:text="${row['SERIAL#']}"></td>
+                                                    <td th:text="${row['USERNAME']}"></td>
+                                                    <td th:text="${row['PROGRAM']}"></td>
+                                                    <td th:text="${row['STATUS']}"></td>
+                                                    <td><a th:href="@{|/manager/killSession?sid=${row['SID']}&serial=${row['SERIAL#']}|}"
+                                                            class="btn btn-xs btn-danger">Cancel</button></a>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-5 col-xl-4 mg-t-30 mg-lg-t-0">
+                                </div> -->
+                            </div>
+                        </div><!-- card-body -->
+                    </div><!-- card -->
+                </div>
+            </div><!-- row -->
+        </div><!-- container -->
+    </div><!-- content -->
+
+
+
+    <footer class="footer" th:replace="~{layout/layout-admin :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.sampledata.js"></script>
+    <script src="/assets/js/dashboard-two.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+<head th:replace="~{layout/layout-admin :: html_head}">
+</head>
+
+<body class="page-profile">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:replace="~{layout/layout-admin :: header}">
+    </header><!-- navbar -->
+
+    <div class="content content-fixed">
+        <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+            <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <h4 class="mg-b-0 tx-spacing--1">Welcome to Dashboard</h4>
+                </div>
+                <div class="d-none d-md-block">
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase"><i data-feather="save"
+                            class="wd-10 mg-r-5"></i> Save</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="upload"
+                            class="wd-10 mg-r-5"></i> Export</button>
+                    <button class="btn btn-sm pd-x-15 btn-white btn-uppercase mg-l-5"><i data-feather="share-2"
+                            class="wd-10 mg-r-5"></i> Share</button>
+                    <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5"><i data-feather="sliders"
+                            class="wd-10 mg-r-5"></i> Settings</button>
+                </div>
+            </div>
+            <div class="row mg-t-15">
+                <div class="col-12 col-xl-6">
+                    <h4 class="mg-b-20">User Information</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>TYPE</th>
+                                <th>VALUE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>USERNAME</td>
+                                <td th:text="${user['USERNAME']}"></td>
+                            </tr>
+                            <tr>
+                                <td>CREATED</td>
+                                <td th:text="${user['CREATED']}"></td>
+                            </tr>
+                            <tr>
+                                <td>EXPIRY_DATE</td>
+                                <td th:text="${user['EXPIRY_DATE']}"></td>
+                            </tr>
+                            <tr>
+                                <td>ACCOUNT_STATUS</td>
+                                <td th:text="${user['ACCOUNT_STATUS']}"></td>
+                            </tr>
+                            <tr>
+                                <td>LAST_LOGIN</td>
+                                <td th:text="${user['LAST_LOGIN']}"></td>
+                            </tr>
+                            <tr>
+                                <td>PRIVILEGE</td>
+                                <td><a
+                                    th:href="@{|/privilege/viewallprivilegegrantedtouser?user_name=${user['USERNAME']}}">Xem đặc quyền</a></td>
+                            </tr>
+                            <tr>
+                                <td>NOTE</td>
+                                <td class="text-danger" th:text="${warning}"></td>
+                            </tr>
+                            <tr>
+                                <td>PROFILE</td>
+                                <td>
+                                    <form id="form-grant-profile"
+                                        th:action="@{/user/grantProfile(username=${user['USERNAME']})}" method="post">
+                                        <select class="form-select" name="profile_name">
+                                            <option th:value="${user['PROFILE']}" th:text="${user['PROFILE']}" selected>
+                                            <option th:each="item : ${profiles}" th:value="${item['PROFILE_NAME']}" th:text="${item['PROFILE_NAME']}">
+                                            </option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td><button form="form-grant-profile" type="submit"
+                                        class="btn btn-primary">Grant</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <h4 class="mg-b-20">Privileges Sys</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>PRIVILEGE</th>
+                                <th>REVOKE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="row : ${privsSys}">
+                                <td th:text="${row['PRIVILEGE']}"></td>
+                                <td><a href="#">Revoke</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 class="mg-b-20">Privileges Table</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>PRIVILEGE</th>
+                                <th>TABLE_NAME</th>
+                                <th>REVOKE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="row : ${privsTab}">
+                                <td th:text="${row['PRIVILEGE']}"></td>
+                                <td th:text="${row['TABLE_NAME']}"></td>
+                                <td><a th:href="@{|/manager/revoke?privs=${row['PRIVILEGE']}&table=${row['TABLE_NAME']}&username=${user_table.USERNAME}|}">Revoke</a></td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                </div>
+                <!-- <div class="col-12 col-xl-6">
+                    <form action="/manager/updateuser" method="post">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" th:value="${user_table.USERNAME}" class="form-control"
+                                placeholder="Enter your email address" name="USERNAME" th:disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" th:value="${user_table.FULLNAME}" class="form-control"
+                                placeholder="Enter your firstname" name="FULLNAME">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" th:value="${user_table.PHONE}" class="form-control"
+                                placeholder="Enter your lastname" name="PHONE">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" th:value="${user_table.EMAIL}" class="form-control"
+                                placeholder="Enter your lastname" name="EMAIL">
+                        </div>
+                        <div class="form-group">
+                            <label>Profile</label>
+                            <select class="form-select" name="profile">
+                                <option th:value="${user_dba['PROFILE']}" th:text="${user_dba['PROFILE']}" selected></option>
+                                <option th:each="profile : ${profiles}" th:value="${profile['PROFILE']}"
+                                    th:text="${profile['PROFILE']}"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-brand-02 w-100">Update</button>
+                    </form>
+                    <h4 class="mg-b-20 mg-t-20">Privileges Sys</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>GRANTED_ROLE</th>
+                                <th>REVOKE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="row : ${roles}">
+                                <td th:text="${row['GRANTED_ROLE']}"></td>
+                                <td><a href="#">Revoke</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+            </div>
+            <div class="card mg-t-15">
+                <div class="card-body">
+                    <h5 class="text-primary">Nhật kí giám sát</h5>
+                    <table class="table table-striped" border="1">
+                        <thead>
+                            <tr>
+                                <th>TIMESTAMP</th>
+                                <th>DB_USER</th>
+                                <th>OBJECT_SCHEMA</th>
+                                <th>OBJECT_NAME</th>
+                                <th>POLICY_NAME</th>
+                                <th>STATEMENT_TYPE</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="row : ${audittrail}">
+                                <td th:text="${row['TIMESTAMP']}"></td>
+                                <td th:text="${row['DB_USER']}"></td>
+                                <td th:text="${row['OBJECT_SCHEMA']}"></td>
+                                <td th:text="${row['OBJECT_NAME']}"></td>
+                                <td th:text="${row['POLICY_NAME']}"></td>
+                                <td th:text="${row['STATEMENT_TYPE']}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- container -->
+    </div><!-- content -->
+
+
+
+    <footer class="footer" th:replace="~{layout/layout-admin :: footer}">
+    </footer>
+
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.stack.js"></script>
+    <script src="/assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.sampledata.js"></script>
+    <script src="/assets/js/dashboard-two.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/dashboard-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:46 GMT -->
+
+</html>

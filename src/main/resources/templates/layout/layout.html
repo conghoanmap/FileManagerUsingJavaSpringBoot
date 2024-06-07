@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/app-file-manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:53 GMT -->
+
+<head th:fragment="html_head">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.png">
+
+    <title>DashForge Responsive Bootstrap 5 Dashboard Template</title>
+
+    <!-- vendor css -->
+    <link href="/assets/lib/%40fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/assets/lib/ionicons/css/ionicons.min.html" rel="stylesheet">
+    <link href="/assets/lib/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- DashForge CSS -->
+    <link rel="stylesheet" href="/assets/css/dashforge.css">
+    <link rel="stylesheet" href="/assets/css/dashforge.filemgr.css">
+    <link rel="stylesheet" href="/assets/css/dashforge.auth.css">
+    <link rel="stylesheet" href="/assets/css/dashforge.dashboard.css">
+</head>
+
+<body class="app-filemgr">
+
+    <header class="navbar navbar-header navbar-header-fixed" th:fragment="header">
+        <a href="#" id="mainMenuOpen" class="burger-menu d-none"><i data-feather="menu"></i></a>
+        <a href="#" id="filemgrMenu" class="burger-menu d-lg-none"><i data-feather="arrow-left"></i></a>
+        <div class="navbar-brand">
+            <a href="/index-2.html" class="df-logo">dash<span>forge</span></a>
+        </div><!-- navbar-brand -->
+        <div id="navbarMenu" class="navbar-menu-wrapper">
+            <div class="navbar-menu-header">
+                <a href="/index-2.html" class="df-logo">dash<span>forge</span></a>
+                <a id="mainMenuClose" href="#"><i data-feather="x"></i></a>
+            </div><!-- navbar-menu-header -->
+            <ul class="nav navbar-menu">
+                <li class="nav-item">
+                    <a th:href="@{/home(currentFolder=${currentfolder})}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/home/profile" class="nav-link">View Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/home/profile" class="nav-link">Change Password</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/auth/logout" class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div><!-- navbar-menu-wrapper -->
+        <div class="navbar-right">
+            <div class="dropdown dropdown-profile">
+                <a href="#" class="dropdown-link" data-bs-toggle="dropdown" data-display="static">
+                    <div class="avatar avatar-sm"><img src="/assets/img/img1.png" class="rounded-circle" alt=""></div>
+                </a><!-- dropdown-link -->
+                <div class="dropdown-menu dropdown-menu-end tx-13">
+                    <div class="avatar avatar-lg mg-b-15"><img src="/assets/img/img1.png" class="rounded-circle" alt="">
+                    </div>
+                    <h6 class="tx-semibold mg-b-5" th:text="${user.FULLNAME}"></h6>
+                    <p class="mg-b-25 tx-12 tx-color-03">Administrator</p>
+
+                    <a href="#" class="dropdown-item"><i data-feather="edit-3"></i> Edit Profile</a>
+                    <a href="/home/profile" class="dropdown-item"><i data-feather="user"></i> View Profile</a>
+                    <a href="/home/changePassword" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-settings">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg> Change Password</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/auth/logout" class="dropdown-item"><i data-feather="log-out"></i>Sign Out</a>
+                </div><!-- dropdown-menu -->
+            </div><!-- dropdown -->
+        </div><!-- navbar-right -->
+    </header><!-- navbar -->
+
+    <div class="filemgr-wrapper" th:fragment="content">
+
+    </div><!-- filemgr-wrapper -->
+    <footer class="footer" th:fragment="footer">
+        <div>
+            <span>&copy; 2023 DashForge v1.0.0. </span>
+            <span>Created by <a href="http://themepixels.me/">ThemePixels</a></span>
+        </div>
+        <div>
+            <nav class="nav">
+                <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
+                <a href="../../change-log.html" class="nav-link">Change Log</a>
+                <a href="https://discordapp.com/invite/RYqkVuw" class="nav-link">Get Help</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/lib/feather-icons/feather.min.js"></script>
+    <script src="/assets/lib/ionicons/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="/assets/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+    <script src="/assets/js/dashforge.js"></script>
+    <script src="/assets/js/dashforge.filemgr.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="/assets/lib/js-cookie/js.cookie.js"></script>
+    <script src="/assets/js/dashforge.settings.js"></script>
+    <script>
+        $(function () {
+            'use script'
+
+            window.darkMode = function () {
+                $('.btn-white').addClass('btn-dark').removeClass('btn-white');
+            }
+
+            window.lightMode = function () {
+                $('.btn-dark').addClass('btn-white').removeClass('btn-dark');
+            }
+
+            var hasMode = Cookies.get('df-mode');
+            if (hasMode === 'dark') {
+                darkMode();
+            } else {
+                lightMode();
+            }
+        })
+    </script>
+</body>
+
+<!-- Mirrored from themepixels.me/demo/dashforge2/template/classic/app-file-manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Apr 2024 14:19:54 GMT -->
+
+</html>
